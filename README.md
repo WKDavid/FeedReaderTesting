@@ -15,8 +15,7 @@ My code works based on **_jasmine-2.1.2_**, located in the **_lib_** folder.
 
 ## How to use:
 
-+ Please click here **[here](https://wkdavid.github.io/FeedReaderTesting/)** to see the web site and results of testing.
-+ Alternatively, you can [download the project](https://github.com/WKDavid/FeedReaderTesting/archive/master.zip)
++ Please [download the project](https://github.com/WKDavid/FeedReaderTesting/archive/master.zip)
 + or clone it <https://github.com/WKDavid/FeedReaderTesting.git>, then run _index.html_ in the main project folder.
 + After the page has been loaded, please wait several seconds for the testing to complete.
 + You will see the results of testing in the bottom of the page.
