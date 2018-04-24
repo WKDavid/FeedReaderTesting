@@ -85,8 +85,8 @@ $(function() {
 
          it('there is at least one entry within the feed container', function() {
            feedContParent = document.getElementsByClassName("feed")[0];
-           feedContChild = document.getElementsByClassName("entry-link")[0];
-           expect(feedContParent.childNodes).toContain(feedContChild);
+           feedContChild = document.getElementsByClassName("entry")[0];
+           expect(feedContChild.parentNode.parentNode).toBe(feedContParent);
          });
     });
 
