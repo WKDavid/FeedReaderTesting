@@ -54,7 +54,7 @@ $(function() {
          * hidden by default.
          */
          it('is hidden by default', function() {
-           expect(body.classList).not.toBe('');
+           expect(body.classList).toContain('menu-hidden');
          });
 
          /* @description: The test ensures the menu changes
@@ -65,9 +65,9 @@ $(function() {
           it('changes visibility on click', function() {
             let theMenu = document.getElementsByClassName("menu-icon-link")[0];
             theMenu.click();
-            expect(body.className).toBe('');
+            expect(body.classList).not.toContain('menu-hidden');
             theMenu.click();
-            expect(body.classList).not.toBe('');
+            expect(body.classList).toContain('menu-hidden');
           });
     });
 
@@ -78,43 +78,40 @@ $(function() {
          * a single .entry element within the .feed container.
          */
          beforeEach(function(done) {
-           setTimeout(function() {
-             feedContParent = document.getElementsByClassName("feed")[0];
-             feedContChild = document.getElementsByClassName("entry-link")[0];
+           loadFeed(0, function() {
              done();
-           }, 1000 );
+           });
          });
 
-         it('there is at least one entry within the feed container', function(done) {
+         it('there is at least one entry within the feed container', function() {
+           feedContParent = document.getElementsByClassName("feed")[0];
+           feedContChild = document.getElementsByClassName("entry-link")[0];
            expect(feedContParent.childNodes).toContain(feedContChild);
-           done();
          });
     });
 
     describe('New Feed Selection', function() {
-      
+
         /* @description: the test ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
-         * Here, after the page is loaded, I am calling the loadFeed
-         * function with a random number (except for 0) as an argument.
+         * Here, loadFeed function if being called twice, as tests should not
+         * depend on one another.
          * Afterwards, the code checks, if child nodes of feed class
          * are actually different.
          */
          beforeEach(function(done) {
-           setTimeout(function() {
+           nr = Math.floor(Math.random() * Math.floor(2) + 1);
+           loadFeed(0, function() {
              feedContentBefore = document.getElementsByClassName("feed")[0].children[0];
-             nr = Math.floor(Math.random() * Math.floor(2) + 1);
-             loadFeed(nr);
-             done();
-           }, 1000 );
+             loadFeed(nr, function() {
+               feedContentAfter = document.getElementsByClassName("feed")[0].children[0];
+               done();
+             })
+           });
          });
 
-         it('a new feed has been loaded with different content', function(done) {
-           setTimeout(function() {
-             feedContentAfter = document.getElementsByClassName("feed")[0].children[0];
-             expect(feedContentBefore).not.toBe(feedContentAfter);
-             done();
-           }, 1500 );
+         it('a new feed has been loaded with different content', function() {
+           expect(feedContentBefore).not.toBe(feedContentAfter);
          });
     });
 }());
