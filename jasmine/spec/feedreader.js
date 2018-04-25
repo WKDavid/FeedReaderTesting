@@ -102,16 +102,16 @@ $(function() {
          beforeEach(function(done) {
            nr = Math.floor(Math.random() * Math.floor(2) + 1);
            loadFeed(0, function() {
-             feedContentBefore = document.getElementsByClassName("feed")[0].children[0];
+             feedContentBefore = document.getElementsByClassName("feed")[0].children[0].children[0].innerHTML;
              loadFeed(nr, function() {
-               feedContentAfter = document.getElementsByClassName("feed")[0].children[0];
+               feedContentAfter = document.getElementsByClassName("feed")[0].children[0].children[0].innerHTML;
                done();
              })
            });
          });
 
          it('a new feed has been loaded with different content', function() {
-           expect(feedContentBefore).not.toBe(feedContentAfter);
+           expect(feedContentBefore).not.toEqual(feedContentAfter);
          });
     });
 }());
